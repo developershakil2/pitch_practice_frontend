@@ -1,0 +1,59 @@
+[
+    {
+      "id": 1,
+      "img": "images/f1.png",
+      "title": "Personal Finance",
+      "tags": "budgeting saving investing retirement planning managing debt",
+      "answer": "Personal finance is crucial for your financial well-being. Whether you're just starting or well into your financial journey, I'm here to help. What specific aspects of personal finance are you interested in learning more about?"
+    },
+    {
+      "id": 2,
+      "img": "images/f2.png",
+      "title": "Corporate Finance",
+      "tags": "financial planning for businesses",
+      "answer": "Corporate finance involves strategic financial planning for businesses. Are you curious about financial decision-making, investment strategies, or managing resources for business success? Let me know your specific interests!"
+    },
+    {
+      "id": 3,
+      "img": "images/f3.png",
+      "title": "Financial Markets",
+      "tags": "stock markets bond markets derivatives markets forex markets (foreign exchange)",
+      "answer": "Financial markets are dynamic ecosystems. Whether you're new to investing or a seasoned trader, I can provide insights. What specific aspects of financial markets intrigue you?"
+    },
+    {
+      "id": 4,
+      "img": "images/f4.png",
+      "title": "Banking",
+      "tags": "retail banking commercial banking investment banking central banking",
+      "answer": "Banking is at the heart of the economy, covering retail, commercial, investment, and central banking. What banking topics are you interested in exploring further?"
+    },
+    {
+      "id": 5,
+      "img": "images/f5.png",
+      "title": "Financial Planning",
+      "tags": "goal setting tax planning estate planning insurance planning",
+      "answer": "Financial planning involves setting goals and creating a roadmap for your future. Are you looking for guidance on goal setting, tax planning, estate planning, or insurance planning?"
+    },
+    {
+      "id": 6,
+      "img": "images/f6.png",
+      "title": "Financial Analysis",
+      "tags": "financial statement analysis ratio analysis cash flow analysis valuation techniques",
+      "answer": "Financial analysis provides insights into a company's health. Interested in understanding financial statements, ratio analysis, cash flow, or valuation techniques?"
+    },
+    {
+      "id": 7,
+      "img": "images/f7.png",
+      "title": "Behavioral Finance",
+      "tags": "understanding investor behavior psychological factors in finance market trends and sentiments",
+      "answer": "Behavioral finance explores the psychology behind investment decisions. What aspects of investor behavior, psychological factors, or market trends would you like to delve into?"
+    },
+    {
+      "id": 8,
+      "img": "images/f8.png",
+      "title": "Investment Management",
+      "tags": "portfolio management asset allocation investment strategies risk analysis",
+      "answer": "Investment management involves optimizing portfolios and managing risks. What specific areas of portfolio management, asset allocation, investment strategies, or risk analysis interest you?"
+    }
+  ]
+  

@@ -2,26 +2,96 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+
+.only_chat_wrapper::-webkit-scrollbar{
+    width:1px; background:transparent
+}
+.only_chat_wrapper::-webkit-scrollbar-thumb{
+    width:1px; background:transparent
+}
+.only_chat_wrapper::-webkit-scrollbar-thumb{
+    width:1px; background:transparent
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@-moz-document url-prefix() {
+  
+    .only_chat_wrapper{
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255, 0, 0, 0) rgba(0, 128, 0, 0);
+    }
+  
   }
-}
+@media screen and (max-width:768px){
+    .container{
+        padding:5px 15px;
+        overflow-x: hidden;
+    }
+    .hero_sec{
+        flex-direction:column;
+        margin-top:50px;
+    }
+    .second_head{
+        font-size:19px;
+    }
+    .hero_sec_left{
+        width:100%;
+    }
+    .hero_sec_left a{
+        font-size:17px;
+        padding:10px 17px;
+        
+    }
+    .hero_sec_left h1{
+        font-size:29px;
+        line-height:39px;
+        margin-bottom:0px;
+    }
+    .hero_sec_right{
+        width:100%;
+        height:349px;
+    }
+    .hero_sec_right img{
+        height: 350px;
+        margin-top:10px
+      }
+    .feature{
+        flex-direction:column;
+    }
+    .featuere_left{
+        width:100%;
+        padding-left: 0px !important;
+    }
+    .feature_right{
+        width:100%;
+    }
+    .about_sec{
+        flex-direction:column;
+    }
+    .about_left{
+        width:100%;
+    }
+    .about_right{
+        width:100%;
+        height:349px;
+        overflow-y: hidden !important;
+    }
+    
+    .about_right img{height:370px !important; width:100%; object-fit: cover;}
+    .about_sec p{
+        font-size:18px;
+        line-height:29px;
+    }
+    .about_right img{
+        object-fit:contain;
+    }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    .right_side{
+        width:100%;
+    }
+    .left_side{
+        width:100%
+    }
+    .footer_wrapper{
+        flex-direction:column;
+    }
 }
