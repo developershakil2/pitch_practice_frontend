@@ -15,12 +15,15 @@ const [chat,setChat] = useState('')
 const [tags, setTags] =useState('')
 const [checkRight, setCheckRight] = useState('chat')
 const [firstAnswer, setFirstAnswer] = useState([`Hi, I'm Alex, your personal finance assistant! Whether you're into investment strategies, financial planning, or understanding economic trends, I'm here to help. What specific areas within finance interest you the most?`])
+const [fuser, setFuser]= useState(null)
 useEffect(() => {
   console.log("Updated chatAnswer:", chatAnswer);
 }, [chatAnswer]);
 useEffect(()=>{
   const tag = localStorage.getItem('tags')
     setTags(tag)
+    const getUser = localStorage.getItem('user');
+    setFuser(getUser)
 },[])
 
 const getAnswer = async () => {
@@ -34,7 +37,14 @@ const getAnswer = async () => {
           console.log("Response data choices:", response.data.choices);
     
           const newChatContent = response.data.data.choices[0]?.message?.content;
-    
+             if(fuser?.userId){
+              const res = await axios.post('http://localhost:5000/init',{
+                userId:fuser.userId,
+                userRequest:chat,
+                systemRequest:newChatContent
+              })
+              console.log(res.data.message)
+             }
           if (newChatContent) {
             const newChatAnswer = [...chatAnswer, newChatContent];
             setChatAnswer(newChatAnswer);

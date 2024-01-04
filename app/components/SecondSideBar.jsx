@@ -5,22 +5,40 @@ import { ContextApi } from '../utilities';
 import Items from '@/app/fi.json'
 
 
-const SecondSideBar=()=>{
+const SecondSideBar=({getUser,closeAll, dis,pro, btn, btn1})=>{
       const {sideNav, disorpro,setCheckRight, selectOption} = useContext(ContextApi);
 
 
       
     return(
       <>
+         
+    
          {
             disorpro === true?
             <>
           
-    
+         
             {
           sideNav === true?  <div className="second_sidebar_inner h-screen overflow-y-scroll bg-[#F0E5D8] p-3 pt-5 w-[380px]">
-          
-          <button onClick={()=> setCheckRight('account')} className="second_sidebar_inner_row px-3 w-full outline-none my-5  hover:bg-[#45fc4b4d] items-center h-[70px] flex justify-between">
+         
+         {
+            sideNav === true ?
+            <div className="w-full mb-10 mobile_nav_bt  my-3 bg-transparent z-40 h-[50px] flex justify-between items-center">
+            <button style={{background:btn}} onClick={dis} className={` p-4 outline-none flex-col flex justify-center items-center  w-[70px] h-[70px] rounded-xl  hover:bg-[#f0dbbf]`}>
+                          <img src="images/left-arrow.svg" alt="star" className="w-[40px] h-[40px]"/>
+                         
+                                                   
+                   </button>
+
+                  
+          </div>:
+          ''
+         }
+
+
+
+          <button onClick={()=> [setCheckRight('account'), closeAll()]} className="second_sidebar_inner_row px-3 w-full outline-none my-5  hover:bg-[#45fc4b4d] items-center h-[70px] flex justify-between">
              <div className="second_sidebar_inner_row_right flex items-center justify-start w-[70%]">
                  <img className="w-[35px] h-[35px] rounded-full" src="images/user1.jpeg" alt="user"/>
                  <span className="ml-3 text-md">Account</span>
@@ -30,11 +48,6 @@ const SecondSideBar=()=>{
                  <img src="images/rightArrow.png" alt="arrow" className="w-[15px] h-[15px]"/>
              </div>
           </button>
-  
-  
-  
-  
-  
   
   
           {/* <button className="second_sidebar_inner_row px-3 w-full outline-none my-5  hover:bg-[#45fc4b4d] items-center h-[70px] flex justify-between">
@@ -64,7 +77,7 @@ const SecondSideBar=()=>{
           </button> */}
   
   
-          <button onClick={()=>setCheckRight('share')} className="second_sidebar_inner_row px-3 w-full outline-none my-5  hover:bg-[#45fc4b4d] items-center h-[70px] flex justify-between">
+          <button onClick={()=>[setCheckRight('share'), closeAll()]} className="second_sidebar_inner_row px-3 w-full outline-none my-5  hover:bg-[#45fc4b4d] items-center h-[70px] flex justify-between">
              <div className="second_sidebar_inner_row_right flex items-center justify-start w-[70%]">
                  <img className="w-[35px] h-[35px] rounded-full" src="images/share.png" alt="user"/>
                  <span className="ml-3 text-md">Share PP with others</span>
@@ -142,12 +155,39 @@ const SecondSideBar=()=>{
             
         
         </>:<>
-        <h2 className="mt-3 pl-3  font-black text-3xl text-start">Discover</h2>
+       
+        {
+            getUser && sideNav === true?
+           <>
+           {
+            getUser ? 
+ <h2 className="mt-3 pl-3  font-black text-3xl text-start">{getUser?.username.split(' ')[0]}</h2>:
+            
+            <h2 className="mt-3 pl-3  font-black text-3xl text-start">Discover</h2>
+            
+           }
+           </>:''
+        }
         {
           sideNav === true? 
           
           <div className="second_sidebar_inner flex-wrap  flex justify-around h-screen overflow-y-scroll bg-[#F0E5D8] p-3 pt-5 w-[380px]">
-           
+            {
+            sideNav === true ?
+            <div className="w-full mb-10 mobile_nav_bt  my-3 bg-transparent z-40 h-[50px] flex justify-between items-center">
+            <button style={{background:btn}} onClick={closeAll} className={` p-4 outline-none flex-col flex justify-center items-center  w-[70px] h-[70px] rounded-xl  hover:bg-[#f0dbbf]`}>
+                          <img src="images/left-arrow.svg" alt="star" className="w-[40px] h-[40px]"/>
+                         
+                                                   
+                   </button>
+
+                   <button onClick={pro} style={{background:btn1}} className=" p-4 outline-none flex-col flex justify-center items-center w-[70px] h-[70px] rounded-xl  bg-transparent hover:bg-[#f0dbbf]">
+                          <img src="images/user1.jpeg" alt="star" className="rounded-full w-[40px] h-[40px]"/>
+                          <span className="text-xs">Profile</span>
+                   </button>
+          </div>:
+          ''
+         }
          
            {
             Items.map((el,indx)=>(
@@ -165,13 +205,6 @@ const SecondSideBar=()=>{
             ))
            }
            
-              
-           
-  
-
-             
-
-  
     </div>:''
         }
         </>
