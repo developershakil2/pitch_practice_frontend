@@ -1,12 +1,12 @@
 
-'use client';
-import React,{useState, useRef, useContext, useEffect, useLayoutEffect} from 'react'
+'use client'
+import React,{useState, useRef, useContext, useEffect} from 'react'
 import { ContextApi } from '@/app/utilities';
 import SecondSideBar from "@/app/components/SecondSideBar";
 import axios from 'axios';
 const Talk = ()=>{
 
-    const {chatAnswer,firstAnswer, setCheckRight, checkRight, chat, setChat, setSideNav,answer1, getAnswer,  setDisorpro} = useContext(ContextApi);
+    const {chatAnswer,firstAnswer,load, setCheckRight, checkRight, chat, setChat, setSideNav,answer1, getAnswer,  setDisorpro} = useContext(ContextApi);
     const [btn,setBtn] = useState('transparent')
     const [btn1, setBtn1] = useState('transparent')
     const [checkLog, setCheckLog] = useState(true)
@@ -48,10 +48,12 @@ const Talk = ()=>{
       },2000)
     }
 
+    const [resMessage, setResMessage] = useState('')
+
 
     const login = async () => {
       try {
-        const response = await axios.post("http://localhost:5000/login", {
+        const response = await axios.post("https://pitchpractice.onrender.com/login", {
           email: loginEmail,
           password: loginPassword
         });
@@ -63,6 +65,10 @@ const Talk = ()=>{
             isVerified: response.data.user.isVerified,
             chats:response.data.user.chats
           };
+          setResMessage(response?.data.message)
+          setTimeout(()=>{
+            setResMessage('')
+          },4000)
     
           localStorage.setItem('user', JSON.stringify(userIn));
     
@@ -71,8 +77,10 @@ const Talk = ()=>{
           }, 3000);
         }
       } catch (error) {
-        console.error(error);
-        alert('Error');
+        setResMessage(error?.response.data.message)
+          setTimeout(()=>{
+            setResMessage('')
+          },4000)
       }
     };
     
@@ -94,18 +102,24 @@ const Talk = ()=>{
 
     const signup = async()=>{
       try{
-        const response = await axios.post("http://localhost:5000/register-user",{
+        const response = await axios.post("https://pitchpractice.onrender.com/register-user",{
           username:signUserName,
           password:signPassword,
           email:signEmail
         })
 
         if(response.status == 200){
-          alert(response.data.message)
+          setResMessage(response?.data.message)
+          setTimeout(()=>{
+            setResMessage('')
+          },4000)
         }
 
       }catch(error){
-        console.log(error)
+        setResMessage(error?.response.data.message)
+          setTimeout(()=>{
+            setResMessage('')
+          },4000)
       }
     }
 
@@ -113,14 +127,51 @@ const Talk = ()=>{
       localStorage.removeItem("user");
       window.location.reload()
     }
+    const [user, setUser] = useState(null);
+    const [chatData, setChatData] = useState(null);
+      
+useEffect(() => {
+  const userExtract = JSON.parse(localStorage.getItem('user'));
+
+  if (userExtract && userExtract.userId) {
+    setUser(userExtract);
+
+    const getData = async () => {
+      try {
+        const response = await axios.post(`https://pitchpractice.onrender.com/get-chats/${userExtract?.userId}`);
+        const data = response.data;
     
+        // Assuming data is an object with a 'message' property
+        setChatData(data?.message || []);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    
+
+    getData();
+  }else{
+    console.log('data not loading')
+  }
+}, []);
+
+
+  console.log(chatData)
+ 
 
     return(
         <>
+        {
+          resMessage? <div className="absolute z-50 h-screen w-full top-0 left-0 bg-[#00000076] flex justify-center items-center flex-col">
+          <div className="w-[350px] bg-white py-10 px-6 flex-col rounded-xl shadow-xl flex justify-center items-center">
+               <h3 className="font-black text-xl text-center">{resMessage}</h3>
+               <button onClick={()=> setResMessage('')} className="px-5 py-3 rounded-xl mt-7 bg-black text-white text-xl font-black">
+                 Okay
+               </button>
+          </div>
+     </div>:''
+        }
         <div className="talk_wrapper bg-[#F0E5D8] flex justify-between">
-            
-            
-            
             
             
             <div className="talk_left flex ">
@@ -169,19 +220,50 @@ const Talk = ()=>{
             </p>
           )) : ''}
 
-          {chatAnswer && chatAnswer?.map((el, indx) => (
+       
+        {
+          getUserInfo?.isVerified === false?
+          <button>please verify your account</button>:
+          <>
+         </>
+        }
+
+        
+
+    {Array.isArray(chatData) &&
+      chatData.map((el, index) => (
+        <div key={index} className="text-2xl my-10 px-5">
+        {el.systemRequest}
+      </div>
+      ))}
+
+   {chatAnswer && chatAnswer?.map((el, indx) => (
             <div key={indx} className="text-2xl my-10 px-5">
               {el}
             </div>
-          ))}
+          ))}     
+
+
+       
+
         </div>
       </div>
+
+        {
+          load === true?
+          <div className="typing-loader">
+          <div className="dot"></div>
+          <div className="dot"></div>
+          <div className="dot"></div>
+        </div>:''
+        }
+
       <div className="chatw w-[80%] flex justify-between items-center my-10 rounded-2xl h-[90px] mx-auto bg-[#FCFAF7] shadow-2xl ">
-        <h2 className=" bg-[#F0E5D8] text-black h-[60px] w-[60px] text-center ml-2 p-3 rounded-full text-2xl font-black">PP</h2>
+        <h2 className=" bg-[#F0E5D8] text-black h-[50px] w-[50px] text-center ml-3 p-2 flex justify-center items-center rounded-full text-lg font-black">PP</h2>
         <input
           value={chat}
           onChange={(e) => setChat(e.target.value)}
-          className="h-full w-[80%] chatfield text-lg font-black bg-transparent outline-none pl-4"
+          className="h-full w-[80%] chatfield text-lg font-black bg-transparent outline-none pl-2"
           placeholder="Talk With PP"
         />
         <button
@@ -227,7 +309,7 @@ const Talk = ()=>{
            
            {
             getUserInfo? <div className="w-full h-full flex justify-center items-center flex-col">
-                 <p className="text-center w-full font-balck text-xl font-black ">we have saved your chats your total is {getUserInfo?.chats.length}</p>
+                 <p className="text-center w-full font-balck text-xl font-black ">we have saved your chats your total is { getUserInfo ? getUserInfo?.chats.length:'N/A'}</p>
                     <h2 className="my-3 text-center w-full font-black text-xl">{getUserInfo?.username}</h2>
                   <button className="outline-none bg-black text-white rounded-xl px-10 py-3" onClick={logout}>logout</button>
               </div>:

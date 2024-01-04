@@ -1,4 +1,3 @@
-
 'use client'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -6,7 +5,9 @@ import 'aos/dist/aos.css';
 
 
 const HomeLastSection = ()=>{
+  if (typeof document !== 'undefined') {
     AOS.init();
+  }
     return(
 
         <>
@@ -43,7 +44,7 @@ const HomeLastSection = ()=>{
             </div>
 
 
-            <div classsName="right_side h-[370px] w-[45%]">
+            <div className="right_side h-[370px]  w-[45%]">
               <img src="images/deal.gif"alt="gif" className="w-full object-cover h-[370px]"/>
             </div>
          </div>

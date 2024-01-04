@@ -4,7 +4,6 @@ import axios from 'axios';
 
 
 export const ContextApi = createContext();
-// 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
 const ContextComponent = ({children})=>{
    
 const [sideNav, setSideNav] = useState(false)
@@ -16,20 +15,22 @@ const [tags, setTags] =useState('')
 const [checkRight, setCheckRight] = useState('chat')
 const [firstAnswer, setFirstAnswer] = useState([`Hi, I'm Alex, your personal finance assistant! Whether you're into investment strategies, financial planning, or understanding economic trends, I'm here to help. What specific areas within finance interest you the most?`])
 const [fuser, setFuser]= useState(null)
+const [load, setLoad] = useState(false)
 useEffect(() => {
   console.log("Updated chatAnswer:", chatAnswer);
 }, [chatAnswer]);
 useEffect(()=>{
   const tag = localStorage.getItem('tags')
     setTags(tag)
-    const getUser = localStorage.getItem('user');
+    const getUser = JSON.parse(localStorage.getItem('user'));
     setFuser(getUser)
 },[])
 
 const getAnswer = async () => {
     
     try {
-      const response = await axios.post('http://localhost:5000/chat',{con:chat, prompt:`all about financial ${tags}`});
+      setLoad(true)
+      const response = await axios.post('https://pitchpractice.onrender.com/chat',{con:chat, prompt:`all about financial ${tags}`});
          setAnswer1(response.data.data);
         
          if (response && response.data.data && response.data.data.choices && response.data.data.choices.length > 0) {
@@ -37,19 +38,23 @@ const getAnswer = async () => {
           console.log("Response data choices:", response.data.choices);
     
           const newChatContent = response.data.data.choices[0]?.message?.content;
-             if(fuser?.userId){
-              const res = await axios.post('http://localhost:5000/init',{
-                userId:fuser.userId,
-                userRequest:chat,
-                systemRequest:newChatContent
-              })
-              console.log(res.data.message)
-             }
+             
+                if(fuser?.userId){
+                  const res = await axios.post('https://pitchpractice.onrender.com/init',{
+                    userId:fuser?.userId,
+                    userRequest:chat,
+                    systemRequest:newChatContent
+                  })
+                  console.log(res.data.message)
+                }
+             
           if (newChatContent) {
             const newChatAnswer = [...chatAnswer, newChatContent];
             setChatAnswer(newChatAnswer);
+            
             setChat('')
             console.log("Updated chatAnswer:", newChatAnswer);
+            setLoad(false)
           } else {
             console.error("Content is undefined or null.");
           }
@@ -77,7 +82,7 @@ const getAnswer = async () => {
 
 
     return(
-       <ContextApi.Provider  value={{setCheckRight, checkRight, firstAnswer,chatAnswer,selectOption, setChatAnswer, chat, setChat,getAnswer,answer1,sideNav,setSideNav,disorpro, setDisorpro}}>
+       <ContextApi.Provider  value={{setCheckRight, load, checkRight, firstAnswer,chatAnswer,selectOption, setChatAnswer, chat, setChat,getAnswer,answer1,sideNav,setSideNav,disorpro, setDisorpro}}>
             {children}
        </ContextApi.Provider>
     )

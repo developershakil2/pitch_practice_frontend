@@ -4,7 +4,9 @@ import 'aos/dist/aos.css';
 
 
 const FeatureSection = ()=>{
-  AOS.init();
+  if (typeof document !== 'undefined') {
+    AOS.init();
+  }
     return(
 
         <>

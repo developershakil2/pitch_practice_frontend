@@ -5,8 +5,10 @@ import 'aos/dist/aos.css';
 
 
 const AboutSection = ()=>{
-    AOS.init();
-
+    
+    if (typeof document !== 'undefined') {
+        AOS.init();
+      }
     return(
         <>
         <div className="about_sec mt-[150px] flex justify-between container mx-auto">

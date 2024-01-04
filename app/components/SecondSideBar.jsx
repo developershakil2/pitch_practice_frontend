@@ -1,7 +1,6 @@
-
 'use client'
 import React, {useContext} from 'react';
-import { ContextApi } from '../utilities';
+import { ContextApi } from '@/app/utilities';
 import Items from '@/app/fi.json'
 
 
@@ -192,7 +191,7 @@ const SecondSideBar=({getUser,closeAll, dis,pro, btn, btn1})=>{
            {
             Items.map((el,indx)=>(
                <>
-                <div key={indx} onClick={()=> selectOption(el.title, el.tags, el.answer)} className="w-[160px] my-2 cursor-pointer hover:transform hover:scale-[1.1] transition-all rounded-bl-xl rounded-br-xl bg-[#F0DBBF] h-[300px] ">
+                <div key={indx} onClick={()=> [selectOption(el.title, el.tags, el.answer), closeAll()]} className="w-[160px] my-2 cursor-pointer hover:transform hover:scale-[1.1] transition-all rounded-bl-xl rounded-br-xl bg-[#F0DBBF] h-[300px] ">
                       <img src={el.img} alt="f1" className="w-full rounded-tl-xl rounded-tr-xl h-[150px]" />
                     <div className="pl-2 pr-2 w-full">
                     <h2 className=" font-black mt-3 leading-[22px] text-xl">{el.title}</h2>

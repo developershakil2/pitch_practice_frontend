@@ -1,10 +1,11 @@
 'use client'
-import AboutSection from "./AboutSection"
+import AboutSection from "@/app/AboutSection"
 
 import FaqSection from "./Faq"
-import FeatureSection from "./FeatureSection"
-import HomeLastSection from "./HomeLastSection"
-import Nav from "./components/Nav"
+import FeatureSection from "@/app/FeatureSection"
+import HomeLastSection from "@/app/HomeLastSection"
+import Nav from "@/app/components/Nav"
+import PropTypes from 'prop-types';
 
 
 export default function Home() {

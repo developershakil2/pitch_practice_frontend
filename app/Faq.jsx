@@ -2,6 +2,7 @@
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Faq from "react-faq-component";
+import PropTypes from 'prop-types';
 
 
 
@@ -46,9 +47,9 @@ const config = {
 };
 
 const FaqSection = ()=>{
-  AOS.init();
-
-
+    if (typeof document !== 'undefined') {
+        AOS.init();
+      }
   
     return(
 
